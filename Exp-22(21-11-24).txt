@@ -1,0 +1,32 @@
+Aim
+To determine whether a given bird can fly using a Prolog program that queries a predefined database of birds, and handles cases where the bird is unknown.
+
+Algorithm
+Define Facts:
+bird(Bird, CanFly).
+Example:
+bird(canary, yes).
+bird(ostrich, no).
+bird(sparrow, yes).
+bird(penguin, no).
+bird(eagle, yes).
+Implementation:
+Rule to check if the bird can fly:
+can_fly(Bird) :-
+    bird(Bird, yes),
+    write(Bird), write(' can fly.'), nl.
+Execution:
+Query the can_fly/1 predicate with the name of a bird to determine its flying ability or if it is unknown:
+
+
+CODE:
+% Query to check if a bird can fly.
+can_fly(Bird) :-
+    bird(Bird, yes),
+    write(Bird), write(' can fly.'), nl.
+can_fly(Bird) :-
+    bird(Bird, no),
+    write(Bird), write(' cannot fly.'), nl.
+can_fly(Bird) :-
+    \+ bird(Bird, _),
+    write('Unknown bird: '), write(Bird), nl.

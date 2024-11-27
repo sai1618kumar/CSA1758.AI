@@ -1,0 +1,65 @@
+Aim:To write a Prolog Program for to implement best first search
+### **Algorithm**
+
+1. Define the graph with nodes, edges, and corresponding costs.  
+2. Define the heuristic function for estimating the cost to the goal from each node.  
+3. Start from the initial node and maintain a priority queue (open list).  
+4. Select the node with the lowest cost (heuristic + path cost).  
+5. Expand the selected node and add its neighbors to the open list.  
+6. Repeat the process until the goal node is reached or the open list is empty.  
+7. Output the path from the start to the goal.
+## **Code**
+% Facts: Graph representation (Node1, Node2, Cost)
+edge(a, b, 1).
+edge(a, c, 3).
+edge(b, d, 1).
+edge(c, d, 1).
+edge(c, e, 5).
+edge(d, goal, 2).
+edge(e, goal, 2).
+
+% Heuristic function (Node, EstimatedCostToGoal)
+heuristic(a, 6).
+heuristic(b, 4).
+heuristic(c, 4).
+heuristic(d, 2).
+heuristic(e, 2).
+heuristic(goal, 0).
+
+% Best-first search implementation
+best_first_search(Start, Goal, Path, Cost) :-
+    best_first([[Start, 0]], Goal, [], Path, Cost).
+
+% Helper function for best-first search
+best_first([[Goal, Cost] | _], Goal, Visited, Path, Cost) :-
+    reverse([Goal | Visited], Path).
+
+best_first([[Current, CurrentCost] | Rest], Goal, Visited, Path, Cost) :-
+    findall([Next, TotalCost],
+        (edge(Current, Next, StepCost), 
+         \+ member(Next, Visited),
+         heuristic(Next, Heuristic),
+         TotalCost is CurrentCost + StepCost + Heuristic),
+        Neighbors),
+    append(Rest, Neighbors, NewOpen),
+    sort(2, @=<, NewOpen, SortedOpen),
+    best_first(SortedOpen, Goal, [Current | Visited], Path, Cost).
+
+% Starting point
+start :-
+    write('Enter the start node: '),
+    read(Start),
+    write('Enter the goal node: '),
+    read(Goal),
+    (   
+        best_first_search(Start, Goal, Path, Cost) ->
+        format('Path: ~w, Cost: ~w~n', [Path, Cost]);
+        write('No path found.')
+    ).
+ **Input**:  
+   ```
+   Enter the start node: a.
+   Enter the goal node: goal.
+ **Output**:  
+   ```
+   Path: [a, b, d, goal], Cost: 4

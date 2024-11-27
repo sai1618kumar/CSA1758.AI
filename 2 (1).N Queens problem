@@ -1,0 +1,58 @@
+Aim:
+To solve the N-Queens problem by placing n queens on an n × n chessboard such that no two queens threaten each other, and to count and display all valid solutions.
+
+Algorithm:
+1.Initialize:Use an array board where board[r] stores the column index of the queen placed in row r.
+2.Use a counter (solutions) to track the total number of solutions.
+Safety Check:
+3.Implement is_safe(r, c) to ensure the queen in row r and column c does not conflict with queens in earlier rows:
+4.No other queen is in the same column.
+5.No other queen is on the same diagonal.
+6.Recursive Backtracking:
+7.Define place_queens(r) to try placing a queen in each column of row r.
+8.If r == n, a valid solution is found. Increment the solution counter and print the board.
+9.Otherwise, for each column, check safety and recursively place queens in the next row.
+10.Print Board:
+11.Display the board configuration for each solution.
+code:
+def solve(n):
+    board = [-1] * n
+    solutions = [0]  # Use a mutable list to keep count of solutions
+
+    def is_safe(r, c):
+        return all(board[i] != c and abs(board[i] - c) != r - i for i in range(r))
+
+    def place_queens(r):
+        if r == n:
+            solutions[0] += 1  # Increment solution count
+            print_board()
+            return True
+        for c in range(n):
+            if is_safe(r, c):
+                board[r] = c
+                place_queens(r + 1)
+        return False
+
+    def print_board():
+        for r in range(n):
+            print(" ".join("Q" if board[r] == c else "." for c in range(n)))
+        print()
+
+    place_queens(0)
+    print(f"Total Solutions: {solutions[0]}")  # Print the total number of solutions
+
+solve(4)
+
+
+Output:
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+
+Total Solutions: 2

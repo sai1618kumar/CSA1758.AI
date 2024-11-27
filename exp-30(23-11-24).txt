@@ -1,0 +1,81 @@
+Aim:To write Prolog Program For Forward Chaining Incorporate requied queries
+### **Algorithm**
+1. Define facts representing the initial knowledge base.  
+2. Define rules to infer new knowledge based on the facts.  
+3. Use forward chaining to iteratively apply rules to infer new conclusions.  
+4. Stop when no new facts can be inferred.  
+5. Allow user queries to check specific facts or inferred conclusions.  
+### ** Code**
+% Facts: Initial knowledge base
+fact(has_fever).
+fact(has_cough).
+fact(has_rash).
+
+% Rules: Infer new facts
+rule(has_infection, [has_fever, has_cough]).
+rule(has_allergy, [has_rash]).
+
+% Forward chaining to infer new facts
+infer :-
+    findall([Fact, Conditions], rule(Fact, Conditions), Rules),
+    process_rules(Rules).
+
+process_rules([]).
+process_rules([[Fact, Conditions] | Rest]) :-
+    (   
+        all_conditions_met(Conditions), \+ fact(Fact) ->
+        assertz(fact(Fact)), % Add inferred fact to knowledge base
+        write('Inferred: '), write(Fact), nl,
+        process_rules(Rest); % Continue with remaining rules
+        process_rules(Rest) % Skip if conditions not met or already inferred
+    ).
+
+% Helper to check if all conditions for a rule are met
+all_conditions_met([]).
+all_conditions_met([H | T]) :-
+    fact(H),
+    all_conditions_met(T).
+
+% Query facts
+query(Fact) :-
+    (   
+        fact(Fact) ->
+        format('Yes, ~w is true.~n', [Fact]);
+        format('No, ~w is not true.~n', [Fact])
+    ).
+
+% Starting point
+start :-
+    write('Performing forward chaining...'), nl,
+    infer,
+    write('Inference complete. You can now query facts.'), nl,
+    query_loop.
+
+% Query loop
+query_loop :-
+    write('Enter a query (e.g., has_infection) or type stop to exit: '),
+    read(Query),
+    (   
+        Query = stop ->
+        write('Goodbye!'), nl;
+        query(Query),
+        query_loop
+    ).
+ **Program Execution**:  
+   ```
+   ?- start.
+   ```
+ **Output**:  
+   ```
+   Performing forward chaining...
+   Inferred: has_infection
+   Inferred: has_allergy
+   Inference complete. You can now query facts.
+   Enter a query (e.g., has_infection) or type stop to exit: has_infection.
+   Yes, has_infection is true.
+   Enter a query (e.g., has_infection) or type stop to exit: has_allergy.
+   Yes, has_allergy is true.
+   Enter a query (e.g., has_infection) or type stop to exit: stop.
+   Goodbye!
+ Result:
+ thus we written prolog program for Forward Chaining Incorporate requied queries

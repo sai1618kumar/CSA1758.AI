@@ -1,0 +1,67 @@
+Aim:To write a prolog program for backward chaining incorporate requied queries
+### **Algorithm**
+1. Define facts representing the initial knowledge base.  
+2. Define rules that specify how to derive conclusions based on known facts.  
+3. Implement backward chaining to recursively check if a query can be proven true.  
+4. If a query matches a fact, return true; otherwise, check rules to derive the query.  
+5. Allow the user to input queries to check if they are true based on the knowledge base and rules.  
+### ** Code**
+% Facts: Initial knowledge base
+fact(has_fever).
+fact(has_cough).
+fact(has_rash).
+
+% Rules: Define how to infer conclusions
+rule(has_infection, [has_fever, has_cough]).
+rule(has_allergy, [has_rash]).
+
+% Backward chaining implementation
+prove(Fact) :-
+    fact(Fact), !; % If the fact is directly known, succeed
+    rule(Fact, Conditions), % Otherwise, check rules
+    prove_all(Conditions). % Prove all conditions of the rule
+
+% Helper to check all conditions
+prove_all([]).
+prove_all([H | T]) :-
+    prove(H),
+    prove_all(T).
+
+% Query for backward chaining
+query(Fact) :-
+    (   
+        prove(Fact) ->
+        format('Yes, ~w is true.~n', [Fact]);
+        format('No, ~w cannot be proven true.~n', [Fact])
+    ).
+
+% Starting point
+start :-
+    write('You can query facts (e.g., has_infection) or type stop to exit.'), nl,
+    query_loop.
+
+% Query loop
+query_loop :-
+    write('Enter a query: '),
+    read(Query),
+    (   
+        Query = stop ->
+        write('Goodbye!'), nl;
+        query(Query),
+        query_loop
+    ).
+ **Output**:  
+   ```
+   You can query facts (e.g., has_infection) or type stop to exit.
+   Enter a query: has_infection.
+   Yes, has_infection is true.
+   Enter a query: has_allergy.
+   Yes, has_allergy is true.
+   Enter a query: has_rash.
+   Yes, has_rash is true.
+   Enter a query: has_fever.
+   Yes, has_fever is true.
+   Enter a query: stop.
+   Goodbye!
+ Result:
+ thus we written a prolog code for backward chaining incorporate requied queries

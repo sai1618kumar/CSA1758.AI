@@ -1,0 +1,64 @@
+Aim:
+The aim of the program is to implement Depth-First Search (DFS) traversal in a graph. DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking.
+Algorithm:
+1. Graph Representation:
+Represent the graph as a dictionary where each key is a node, and its value is a list of neighbors (adjacency list).
+2. DFS Traversal:
+Use recursion to visit nodes in a depth-first manner:
+Start from the given node.
+If the node is not visited:
+Mark it as visited.
+Print or process the node.
+Recursively call DFS on all its unvisited neighbors.
+3. DFS Main Function:
+Initialize an empty visited set to track visited nodes.
+Call the recursive DFS function, passing the graph, start node, and visited set.
+        A
+       / \
+      B   C
+     / \    \
+    D   E    F
+         \
+          F
+
+Code:
+print("DFS")
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+def dfs(graph, start, visited):
+    if start not in visited:
+        print(start, end=' ')
+        visited.add(start)
+        for neighbor in graph[start]:
+            dfs(graph, neighbor, visited)
+def dfs_main(graph, start_node):
+    visited = set()
+    dfs(graph, start_node, visited)
+dfs_main(graph, 'A')
+Output:
+Enter the number of nodes in the graph: 5
+
+Enter the graph as adjacency lists. For each node, provide its neighbors separated by spaces.
+
+Enter node and its neighbors (e.g., A B C): A B C
+
+Enter node and its neighbors (e.g., A B C): B A D
+
+Enter node and its neighbors (e.g., A B C): C A E 
+
+Enter node and its neighbors (e.g., A B C): E C 
+
+Enter node and its neighbors (e.g., A B C): D B
+
+Enter the start node: A
+
+Enter the goal node: D
+
+Path found!
+

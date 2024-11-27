@@ -1,0 +1,23 @@
+Aim:
+The aim of this Prolog program is to define and query the date of birth of individuals. 
+The program provides a date_of_birth/2 predicate that maps a person's name to their date of birth using facts (dob/2). 
+This allows for querying and retrieving the date of birth of specific individuals in a knowledge base.
+
+Algorithm:
+Define the Knowledge Base:
+Use facts (dob(Name, DateOfBirth)) to store the name and date of birth of individuals.
+Define a Rule for Generalization:
+Create a rule date_of_birth(Name, DateOfBirth) that links to the facts dob/2.
+Query the Knowledge Base:
+Use the rule date_of_birth/2 to query the date of birth of any individual by name.
+Execution:
+When a query is made, Prolog matches the Name with the defined facts and retrieves the corresponding DateOfBirth.
+
+CODE:
+dob(john, '1990-05-15').
+dob(alice, '1985-12-30').
+dob(michael, '1995-08-20').
+dob(susan, '1978-03-10').
+dob(peter, '2000-11-05').
+date_of_birth(Name, DateOfBirth) :-
+    dob(Name, DateOfBirth).

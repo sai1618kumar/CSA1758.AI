@@ -1,0 +1,44 @@
+Aim:to Write Prolog Program Medical Diagnosis
+### **Algorithm**
+1. Define symptoms and corresponding diseases in the knowledge base.  
+2. Accept user input for symptoms they are experiencing.  
+3. Match the provided symptoms with diseases using predefined rules.  
+4. Suggest potential diagnoses based on the symptoms.  
+5. Handle cases where no matching disease is found.  
+### **Prolog Code**
+% Facts: Diseases and their associated symptoms
+disease(flu, [fever, cough, sore_throat, fatigue]).
+disease(cold, [cough, runny_nose, sneezing]).
+disease(covid, [fever, cough, shortness_of_breath, loss_of_taste_or_smell]).
+disease(malaria, [fever, chills, sweating, headache]).
+disease(allergy, [sneezing, runny_nose, itchy_eyes]).
+
+% Rule to find possible diseases based on symptoms
+diagnose(Symptoms, Disease) :-
+    disease(Disease, DiseaseSymptoms),
+    subset(Symptoms, DiseaseSymptoms).
+
+% Subset helper function
+subset([], _).
+subset([H | T], List) :-
+    member(H, List),
+    subset(T, List).
+
+% Starting point
+start :-
+    write('Enter your symptoms as a list (e.g., [fever, cough]): '),
+    read(Symptoms),
+    findall(Disease, diagnose(Symptoms, Disease), PossibleDiseases),
+    (   
+        PossibleDiseases \= [] ->
+        format('Possible diseases based on your symptoms: ~w~n', [PossibleDiseases]);
+        write('No matching disease found. Please consult a doctor.')
+    ).
+**Input**:  
+   ```
+   Enter your symptoms as a list (e.g., [fever, cough]): [fever, cough].
+**Output**:  
+   ```
+   Possible diseases based on your symptoms: [flu, covid]
+Result:
+thus we written a prolog for medical diagnosis

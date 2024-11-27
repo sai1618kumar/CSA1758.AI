@@ -1,0 +1,19 @@
+Aim
+To calculate the sum of the first 𝑁
+N natural numbers using a mathematical formula in Prolog.
+
+Algorithm
+Understand the Mathematical Formula:
+The sum of the first 𝑁
+N natural numbers can be calculated directly using the formula:
+Sum=(𝑁+1)×𝑁2 
+This formula avoids iterative summation and provides a direct result.
+Define a Prolog Rule:
+Define a rule sum(N, Sum) where:
+N is the input number (up to which the sum is calculated).
+Sum is the output, calculated using the formula.
+Implementation in Prolog:
+Use the is keyword to perform arithmetic operations.
+
+sum(N, Sum) :-
+    Sum is (N + 1) * N / 2.

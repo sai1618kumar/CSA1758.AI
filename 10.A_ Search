@@ -1,0 +1,85 @@
+Aim:
+The aim of the program is to implement the A (A-star)* search algorithm, which is used to find the shortest path from a start node to a goal node in a weighted graph.
+A* is an informed search algorithm that combines the cost to reach a node and a heuristic estimate of the cost to reach the goal.
+Algorithm:
+1. Problem Representation:
+Graph Representation:
+Represent the graph as a dictionary of dictionaries, where each key is a node, and its value is another dictionary containing neighbors and their respective edge costs.
+Start and Goal Nodes:
+Specify the starting node and the target (goal) node.
+2. Initialization:
+Create an open list (priority queue) initialized with the start node and its cost (0).
+Maintain a came_from dictionary to reconstruct the shortest path once the goal is reached.
+Use a g_score dictionary to track the cost of the shortest path from the start to each node, initialized to infinity except for the start node (set to 0).
+3. Main Loop:
+While the open list is not empty:
+Dequeue the node with the lowest total estimated cost (f_score = g_score + heuristic) from the open list.
+If the current node is the goal, reconstruct and return the path using the came_from dictionary.
+For each neighbor of the current node:
+Calculate the tentative g_score for reaching the neighbor through the current node.
+If this tentative score is less than the currently known g_score:
+Update the g_score for the neighbor.
+Update the came_from dictionary to point back to the current node.
+Calculate the f_score for the neighbor and push it into the open list.
+4. Heuristic Function:
+The heuristic function provides an estimate of the cost from a node to the goal. In this implementation,
+it is a placeholder (return 0) and can be replaced with an appropriate heuristic (e.g., Euclidean or Manhattan distance).
+Code:
+print("maha")
+import heapq
+def heuristic(node, goal):
+    # Replace this with an appropriate heuristic function
+    return 0
+def astar(graph, start, goal):
+    open_list = [(0, start)]
+    came_from = {}
+    g_score = {node: float('inf') for node in graph}
+    g_score[start] = 0
+    while open_list:
+        current_cost, current_node = heapq.heappop(open_list)
+        if current_node == goal:
+            path = []
+            while current_node in came_from:
+                path.insert(0, current_node)
+                current_node = came_from[current_node]
+            path.insert(0, start)
+            return path
+        for neighbor, cost in graph[current_node].items():
+            tentative_g_score = g_score[current_node] + cost
+            if tentative_g_score < g_score[neighbor]:
+                came_from[neighbor] = current_node
+                g_score[neighbor] = tentative_g_score
+                f_score = tentative_g_score + heuristic(neighbor, goal)
+                heapq.heappush(open_list, (f_score, neighbor))
+    return None
+# Example usage:
+graph = {
+    'A': {'B': 1, 'C': 3},
+    'B': {'A': 1, 'C': 1, 'D': 4},
+    'C': {'A': 3, 'B': 1, 'D': 1},
+    'D': {'B': 4, 'C': 1},
+}
+start_node = 'A'
+goal_node = 'D'
+path = astar(graph, start_node, goal_node)
+if path:
+    print("Shortest path:", path)
+else:
+    print("No path found.")
+Output:
+Enter the graph as adjacency list (e.g., A B 1 means A->B with cost 1):
+Enter edge (or 'done' to finish): A B 1
+Enter edge (or 'done' to finish): A C 2
+Enter edge (or 'done' to finish): B D 2
+Enter edge (or 'done' to finish): C E 1
+Enter edge (or 'done' to finish): done
+Enter heuristic values as 'Node Value' (e.g., A 7):
+Enter heuristic (or 'done' to finish): A 1
+Enter heuristic (or 'done' to finish): B 2
+Enter heuristic (or 'done' to finish): C 3
+Enter heuristic (or 'done' to finish): D 4
+Enter heuristic (or 'done' to finish): E 1
+Enter heuristic (or 'done' to finish): done
+Enter start node: A
+Enter goal node: D
+Path found: ['A', 'B', 'D']

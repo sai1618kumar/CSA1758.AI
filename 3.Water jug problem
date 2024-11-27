@@ -1,0 +1,100 @@
+Aim:
+To solve the Water Jug Problem using Breadth-First Search (BFS), determining whether it is possible to measure a target amount of water using two jugs of given capacities and exploring all possible states.
+
+Algorithm:
+Initialization:
+
+Use a queue to manage states for BFS and a set to track visited states.
+Start with both jugs empty ((0, 0)).
+BFS Exploration:
+
+Dequeue a state (jug1, jug2) and mark it as visited.
+If the target amount is found in either jug, print the solution and terminate.
+Otherwise, generate all possible next states:
+Fill either jug to its capacity.
+Empty either jug.
+Pour water from one jug into the other until the first is empty or the second is full.
+Check for Repeats:
+
+Add new states to the queue only if they have not been visited.
+Terminate:
+
+If the queue is exhausted without finding the target, print that no solution exists.
+code:
+from collections import deque
+
+def water_jug_bfs(jug1_capacity, jug2_capacity, target):
+    """Solves the Water Jug Problem using BFS."""
+    # To store visited states
+    visited = set()
+    # Queue for BFS
+    queue = deque()
+    # Initial state (both jugs empty)
+    queue.append((0, 0))  # (jug1_current, jug2_current)
+
+    while queue:
+        jug1, jug2 = queue.popleft()
+
+        # If we've already visited this state, skip it
+        if (jug1, jug2) in visited:
+            continue
+
+        # Mark state as visited
+        visited.add((jug1, jug2))
+
+        # Print the current state
+        print(f"Jug1: {jug1}L, Jug2: {jug2}L")
+
+        # If we reach the target, return the solution
+        if jug1 == target or jug2 == target:
+            print("\nGoal reached!")
+            return True
+
+        # Add all possible next states
+        next_states = [
+            (jug1_capacity, jug2),       # Fill Jug1
+            (jug1, jug2_capacity),       # Fill Jug2
+            (0, jug2),                   # Empty Jug1
+            (jug1, 0),                   # Empty Jug2
+            (min(jug1 + jug2, jug1_capacity), max(0, jug2 - (jug1_capacity - jug1))),  # Pour Jug2 -> Jug1
+            (max(0, jug1 - (jug2_capacity - jug2)), min(jug1 + jug2, jug2_capacity))   # Pour Jug1 -> Jug2
+        ]
+
+        for state in next_states:
+            if state not in visited:
+                queue.append(state)
+
+    # If we exhaust all states and don't reach the target
+    print("\nNo solution found.")
+    return False
+
+# User Input
+try:
+    jug1_capacity = int(input("Enter the capacity of Jug1 (L): "))
+    jug2_capacity = int(input("Enter the capacity of Jug2 (L): "))
+    target = int(input("Enter the target amount of water (L): "))
+
+    if target > max(jug1_capacity, jug2_capacity):
+        print("The target amount is greater than the capacity of both jugs. No solution.")
+    else:
+        print("\nSolving the Water Jug Problem...\n")
+        water_jug_bfs(jug1_capacity, jug2_capacity, target)
+except ValueError:
+    print("Invalid input. Please enter integers for capacities and target.")
+Sample Output:
+Enter the capacity of Jug1 (L): 5
+Enter the capacity of Jug2 (L): 2
+Enter the target amount of water (L): 3
+
+Solving the Water Jug Problem...
+
+Jug1: 0L, Jug2: 0L
+Jug1: 5L, Jug2: 0L
+Jug1: 0L, Jug2: 2L
+Jug1: 5L, Jug2: 2L
+Jug1: 3L, Jug2: 2L
+
+Goal reached!
+
+    
+

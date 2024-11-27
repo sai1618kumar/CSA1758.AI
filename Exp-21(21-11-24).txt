@@ -1,0 +1,30 @@
+Aim
+To solve the Towers of Hanoi problem using a recursive Prolog program that provides the sequence of moves to transfer 𝑁
+N disks from one tower to another, using a third tower as an auxiliary.
+
+Algorithm
+Problem Definition:
+The Towers of Hanoi problem involves three towers (let’s call them Tower1, Tower2, and Tower3).
+The goal is to move 𝑁
+N disks from Tower1 to Tower3 using Tower2 as an auxiliary tower, adhering to the following rules:
+Only one disk can be moved at a time.
+A disk can only be placed on top of a larger disk or on an empty tower.
+Recursive Case:
+For N>1:Move the top 𝑁−1
+N−1 disks from Tower1 to Tower2 using Tower3 as an auxiliary.
+Move the 𝑁
+N-th disk (the largest) directly from Tower1 to Tower3.
+Move the 𝑁−1
+N−1 disks from Tower2 to Tower3 using Tower1 as an auxiliary.
+
+CODE:
+% hanoi/3 represents the solution to the Towers of Hanoi problem.
+% Move N disks from Tower1 to Tower3 using Tower2 as an auxiliary tower.
+hanoi(1, Tower1, Tower3, _) :-
+    write('Move disk 1 from '), write(Tower1), write(' to '), write(Tower3), nl.
+hanoi(N, Tower1, Tower3, Tower2) :-
+    N > 1,
+    M is N - 1,
+    hanoi(M, Tower1, Tower2, Tower3),
+    write('Move disk '), write(N), write(' from '), write(Tower1), write(' to '), write(Tower3), nl,
+    hanoi(M, Tower2, Tower3, Tower1).

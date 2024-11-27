@@ -1,0 +1,51 @@
+Aim:
+The aim of this Prolog program is to represent and query familial relationships, 
+including identifying parents, listing males and females, and retrieving parental details of a given individual. 
+The program defines facts for family members, their gender, and parent-child relationships, as well as rules to infer relationships and perform queries.
+
+Algorithm:
+Define Facts:
+Use male/1 and female/1 to define the gender of individuals.
+Use parent/2 to represent parent-child relationships.
+Define Rules:
+Father Rule: father(X, Y) states that X is the father of Y if X is male and a parent of Y.
+Mother Rule: mother(X, Y) states that X is the mother of Y if X is female and a parent of Y.
+Define Queries:
+Parental Details: get_parents_details(Name) retrieves and prints the names of the father and mother of Name if available.
+List of Males: get_males(Males) finds and returns a list of all males in the database using findall/3.
+List of Females: get_females(Females) finds and returns a list of all females in the database using findall/3.
+Execution:
+When querying, Prolog matches the inputs (e.g., name of an individual) against the facts and rules to provide the desired output.
+
+
+CODE:
+% Facts
+male(john).
+male(bob).
+male(jim).
+male(tom).
+female(lisa).
+female(anna).
+female(susan).
+parent(john, bob).
+parent(john, jim).
+parent(anna, bob).
+parent(anna, jim).
+parent(bob, tom).
+parent(bob, lisa).
+parent(susan, tom).
+parent(susan, lisa).
+% Rules
+father(X, Y) :- male(X), parent(X, Y).
+mother(X, Y) :- female(X), parent(X, Y).
+% Query to get details about parents
+get_parents_details(Name) :-
+    (father(Father, Name) -> format('Father of ~w is ~w.~n', [Name, Father]); true),
+    (mother(Mother, Name) -> format('Mother of ~w is ~w.~n', [Name, Mother]); true).
+% Query to get a list of males
+get_males(Males) :-
+    findall(X, male(X), Males).
+% Query to get a list of females
+get_females(Females) :-
+    findall(X, female(X), Females).
+

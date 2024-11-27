@@ -1,0 +1,31 @@
+Aim:
+The aim of this Prolog program is to define and query the properties of planets in our solar system.
+The planet_properties/4 predicate allows users to retrieve or specify information about a planet, including its name, type, size, and temperature.
+
+
+Algorithm:
+Define the Knowledge Base:
+Use facts planet(Name, Type, Size, Temperature) to store details about each planet:
+Name: Name of the planet (e.g., mercury, venus).
+Type: Classification of the planet (e.g., rocky, gas giant, ice giant).
+Size: Relative size of the planet (e.g., small, medium, large).
+Temperature: Temperature conditions on the planet (e.g., hot, cold).
+Define a General Rule:
+Use the rule planet_properties(Name, Type, Size, Temperature) to allow querying the planet's properties. This rule directly references the planet/4 facts.
+Query the Knowledge Base:
+To find specific details about a planet, query using planet_properties/4 with known or unknown parameters.
+Execution:
+Prolog matches the query with the relevant facts in planet/4 to retrieve the requested information.
+
+
+CODE:
+planet(mercury,rocky,small,hot).
+planet(venus,rocky,small,hot).
+planet(earth,rocky,small,moderate).
+planet(mars,rocky,small,cold).
+planet(jupiter,gas_gaint,large,very_hot).
+planet(saturn,gas_gaint,large,hot).
+planet(uranus,ice_gaint,medium,cold).
+planet(neptune,ice_gaint,medium,very_cold).
+planet_properties(Name,Type,Size,Temperature):-
+planet(Name,Type,Size,Temperature).

@@ -1,0 +1,35 @@
+Aim:to write prolog program to suggest dieting System Based on Disease
+Algorithm:
+1. Define a knowledge base listing diseases and their corresponding diet recommendations.  
+2. Store diet recommendations as facts in the knowledge base.  
+3. Accept user input for their disease.  
+4. Match the user's disease input with the defined facts in the knowledge base.  
+5. Retrieve and display the diet recommendation for the matched disease.  
+6. Handle cases where the disease is not recognized by displaying an appropriate message.
+Program:
+% Knowledge Base
+diet(sugar_diabetes, [low_sugar, high_fiber, balanced_carbs, fresh_vegetables]).
+diet(hypertension, [low_salt, low_fat, high_potassium, fresh_fruits]).
+diet(heart_disease, [low_fat, omega_3_rich, whole_grains, nuts]).
+diet(obesity, [low_calorie, high_fiber, low_fat, protein_rich]).
+diet(anemia, [iron_rich, vitamin_c_rich, leafy_greens, lean_meat]).
+
+% Rule to get a diet recommendation based on disease
+suggest_diet(Disease, Diet) :-
+    diet(Disease, Diet).
+
+% Starting Point
+start :-
+    write('Enter your disease (sugar_diabetes, hypertension, heart_disease, obesity, anemia): '),
+    read(Disease),
+    (   
+        suggest_diet(Disease, Diet) ->
+        format('Suggested Diet for ~w: ~w~n', [Disease, Diet]);
+        write('Disease not recognized. Please try again.')
+    ).
+Sample Input:
+Enter your disease (sugar_diabetes, hypertension, heart_disease, obesity, anemia): sugar_diabetes.
+Sample Output:
+Suggested Diet for sugar_diabetes: [low_sugar, high_fiber, balanced_carbs, fresh_vegetables]
+Result:
+thus we written prolog program for suggesting dieting system based on disease.

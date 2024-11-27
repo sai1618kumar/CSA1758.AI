@@ -1,0 +1,60 @@
+Aim:to write a prolog program for implementing pattern matching
+### **Algorithm**
+
+1. Define facts representing different patterns (e.g., strings, lists, or other structures).  
+2. Define rules to describe how patterns can be matched.  
+3. Allow user queries to check if a given input matches a predefined pattern.  
+4. Use Prolog's pattern-matching capabilities (e.g., unification) to verify matches.  
+5. Provide feedback on whether the input matches the pattern or not.  
+
+---
+
+### ** Code**
+% Facts: Define patterns
+pattern(alpha, [a, b, c, d, e]). % Alphabet pattern
+pattern(digits, [1, 2, 3, 4, 5]). % Digit pattern
+pattern(mixed, [x, y, z, 1, 2, 3]). % Mixed pattern
+pattern(empty, []). % Empty pattern
+
+% Rule: Match a given list with a pattern
+match_pattern(Name, Input) :-
+    pattern(Name, Pattern),
+    Pattern = Input. % Match input with pattern using unification
+
+% Starting point
+start :-
+    write('Available patterns: alpha, digits, mixed, empty.'), nl,
+    write('Enter the name of the pattern: '),
+    read(PatternName),
+    write('Enter the input list to match (e.g., [a, b, c]): '),
+    read(InputList),
+    (   
+        match_pattern(PatternName, InputList) ->
+        format('Yes, the input ~w matches the pattern ~w.~n', [InputList, PatternName]);
+        format('No, the input ~w does not match the pattern ~w.~n', [InputList, PatternName])
+    ).
+
+% Query loop for multiple matches
+query_loop :-
+    write('Do you want to try another match? (yes/no): '),
+    read(Response),
+    (   
+        Response = yes -> start, query_loop;
+        Response = no -> write('Goodbye!'), nl;
+        write('Invalid input. Exiting.'), nl
+    ).
+ **Output**:  
+   ```
+   Available patterns: alpha, digits, mixed, empty.
+   Enter the name of the pattern: alpha.
+   Enter the input list to match (e.g., [a, b, c]): [a, b, c, d, e].
+   Yes, the input [a, b, c, d, e] matches the pattern alpha.
+   Do you want to try another match? (yes/no): yes.
+   Available patterns: alpha, digits, mixed, empty.
+   Enter the name of the pattern: digits.
+   Enter the input list to match (e.g., [a, b, c]): [1, 2, 3].
+   No, the input [1, 2, 3] does not match the pattern digits.
+   Do you want to try another match? (yes/no): no.
+   Goodbye!
+##Result:
+thus we written prolog program for pattern matching.

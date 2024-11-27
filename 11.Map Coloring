@@ -1,0 +1,76 @@
+Aim:
+The aim of this program is to solve the map coloring problem using a backtracking algorithm. 
+The goal is to assign colors to the nodes of a graph such that no two adjacent nodes share the same color, adhering to constraints defined by the graph's structure.
+
+Algorithm:
+The program follows the backtracking algorithm for solving the map coloring problem. Below is a step-by-step explanation of the algorithm:
+1. Input Definition:
+Represent the map (or graph) as an adjacency list.
+Define a list of colors available for coloring the nodes.
+2. Backtracking Approach:
+Use a helper function is_safe to check if assigning a particular color to a node is valid:
+Ensure no adjacent node already has the same color.
+Implement a recursive function map_coloring:
+Base Case: If all nodes are successfully colored, return True.
+Recursive Step:
+Pick the first uncolored node from the list.
+Try assigning each color from the list of available colors:
+If the color is valid (checked via is_safe), assign it.
+Recur with the remaining nodes.
+If the recursive call returns True, propagate success.
+If no valid color can be assigned, backtrack by removing the color assignment.
+If all possibilities are exhausted and no solution is found, return False.
+3. Output the Solution:
+If a valid coloring is found, print the assignment of colors to nodes.
+Otherwise, indicate that no valid solution exists.
+
+CODE:
+print("maha")
+def is_safe(graph, node, color, coloring):
+    for neighbor in graph[node]:
+        if neighbor in coloring and coloring[neighbor] == color:
+            return False
+    return True
+def map_coloring(graph, colors, coloring, nodes):
+    if not nodes:
+        return True
+    node = nodes[0]
+    for color in colors:
+        if is_safe(graph, node, color, coloring):
+            coloring[node] = color
+            if map_coloring(graph, colors, coloring, nodes[1:]):
+                return True
+            coloring.pop(node, None)
+    return False
+def main():
+    graph = {
+        'A': ['B', 'C'],
+        'B': ['A', 'C', 'D'],
+        'C': ['A', 'B', 'D', 'E'],
+        'D': ['B', 'C', 'E', 'F'],
+        'E': ['C', 'D'],
+        'F': ['D']
+    }
+    colors = ['Red', 'Green', 'Blue', 'Yellow']
+    coloring = {}
+    nodes = list(graph.keys())
+    if map_coloring(graph, colors, coloring, nodes):
+        print("Map coloring solution:")
+        for node, color in coloring.items():
+            print(f"{node} -> {color}")
+    else:
+        print("No valid coloring found for the map.")
+if __name__ == "__main__":
+    main()
+Ouput:
+Enter the number of nodes: 5
+Enter the adjacency list for each node:
+Enter a node and its neighbors (space-separated): A B C
+Enter a node and its neighbors (space-separated): B A D 
+Enter a node and its neighbors (space-separated): C A E
+Enter a node and its neighbors (space-separated): D B
+Enter a node and its neighbors (space-separated): E C
+Enter the available colors (space-separated): Red Green Blue
+Coloring solution: {'A': 'Red', 'B': 'Green', 'C': 'Green', 'D': 'Red', 'E': 'Red'}
+
+    

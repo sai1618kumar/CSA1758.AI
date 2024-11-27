@@ -1,0 +1,54 @@
+Aim:To write a Prolog Program for fruit and its color using for backtracking
+Algorithm :
+
+
+1. Define facts associating fruits with their colors.  
+2. Accept a query to find the color of a specific fruit.  
+3. Use backtracking to explore all possible matches in the knowledge base.  
+4. Display the color of the queried fruit or state that it is not found.  
+
+---
+
+### **Code**:
+% Facts: Fruit and their colors
+fruit_color(apple, red).
+fruit_color(banana, yellow).
+fruit_color(grape, purple).
+fruit_color(orange, orange).
+fruit_color(kiwi, green).
+
+% Rule to find the color of a fruit
+find_color(Fruit, Color) :-
+    fruit_color(Fruit, Color).
+
+% Starting Point
+start :-
+    write('Enter the name of the fruit: '),
+    read(Fruit),
+    (
+        find_color(Fruit, Color) ->
+        format('The color of ~w is ~w.~n', [Fruit, Color]);
+        write('Fruit not found. Please try again.')
+    ),
+    write('Do you want to check another fruit? (yes/no): '),
+    read(Choice),
+    (
+        Choice = yes -> start;
+        write('Goodbye!'), nl
+    ).
+```
+
+---
+
+### **Sample Interaction**
+
+ **Input**:  
+   ```
+   Enter the name of the fruit: apple.
+   ```
+
+ **Output**:  
+   ```
+   The color of apple is red.
+   Do you want to check another fruit? (yes/no): yes.
+   ```

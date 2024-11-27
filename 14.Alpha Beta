@@ -1,0 +1,64 @@
+Aim:
+The aim of this Python program is to implement the Minimax Algorithm with Alpha-Beta Pruning to determine the optimal value for a decision-making problem, 
+commonly used in game theory and AI for decision-making in adversarial games like chess or tic-tac-toe.
+
+Algorithm
+Definitions and Parameters:
+The algorithm operates on a game tree, where each node represents a game state.
+maximizingPlayer alternates between maximizing and minimizing players.
+alpha and beta are bounds for pruning unnecessary branches.
+values represent the leaf nodes of the game tree.
+Base Case:
+When the depth reaches the predefined terminal level (3 in this case), return the value of the leaf node at the corresponding nodeIndex.
+Recursive Traversal:
+If the current player is the maximizer:
+Initialize best to the smallest possible value (MIN).
+Return:
+Return best, which is the optimal value for the current player at the given node.
+Driver Code:
+Define a sample leaf node array (values) representing terminal states of the game.
+Call the minimax function with initial parameters to determine the optimal value for the root node.
+
+
+CODE:
+MAX, MIN = 1000, -1000
+# Returns optimal value for current player
+#(Initially called for root and maximizer)
+def minimax(depth, nodeIndex, maximizingPlayer,
+			values, alpha, beta):
+	# Terminating condition. i.e
+	# leaf node is reached
+	if depth == 3:
+		return values[nodeIndex]
+	if maximizingPlayer:
+		best = MIN
+		# Recur for left and right children
+		for i in range(0, 2):
+			val = minimax(depth + 1, nodeIndex * 2 + i,
+						False, values, alpha, beta)
+			best = max(best, val)
+			alpha = max(alpha, best)
+			# Alpha Beta Pruning
+			if beta <= alpha:
+				break
+		return best
+	else:
+		best = MAX
+		# Recur for left and
+		# right children
+		for i in range(0, 2):
+			val = minimax(depth + 1, nodeIndex * 2 + i,
+							True, values, alpha, beta)
+			best = min(best, val)
+			beta = min(beta, best)
+			# Alpha Beta Pruning
+			if beta <= alpha:
+				break
+		return best
+# Driver Code
+if __name__ == "__main__":
+	values = [3, 5, 6, 9, 1, 2, 0, -1]
+	print("The optimal value is :", minimax(0, 0, True, values, MIN, MAX))
+ Output:
+ Enter the values as space-separated integers: 3 5 6 9 1 2 0 -1
+ The optimal value is: 5

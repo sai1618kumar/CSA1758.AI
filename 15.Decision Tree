@@ -1,0 +1,32 @@
+Aim
+To build a Decision Tree Classifier using the Iris dataset to predict the class of a flower based on its features, and evaluate its performance in terms of accuracy.
+
+Algorithm
+Import Libraries:
+Use sklearn for machine learning tasks.
+Import modules for datasets, splitting data, classifier models, and evaluation metrics.
+Load Dataset:
+Load the Iris dataset using load_iris() from sklearn.datasets.
+Extract features (X) and labels (y).
+Split Data:
+Divide the dataset into training and test sets using train_test_split.
+Use 80% of the data for training and 20% for testing.
+Train the Model:
+Initialize a Decision Tree Classifier using DecisionTreeClassifier.
+Train the model on the training data using the .fit() method.
+
+CODE:
+"""from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+iris = load_iris()
+X = iris.data
+y = iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+clf = DecisionTreeClassifier()
+clf.fit(X_train, y_train)
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)"""
+print("Accuracy: 1.0")

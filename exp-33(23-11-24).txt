@@ -1,0 +1,37 @@
+Aim:to write a prolog for finding the number of vowels.
+### **Algorithm**
+
+1. Define facts for vowels (a, e, i, o, u).  
+2. Accept a list of characters (string) as input.  
+3. Check each character in the list to determine if it is a vowel.  
+4. Count the number of vowels in the list recursively.  
+5. Return the total count of vowels in the input.  
+### ** Code**
+% Facts: Define vowels
+vowel(a).
+vowel(e).
+vowel(i).
+vowel(o).
+vowel(u).
+
+% Rule: Count vowels in a list
+count_vowels([], 0). % Base case: An empty list has 0 vowels
+count_vowels([H | T], Count) :-
+    vowel(H), % If the head is a vowel
+    count_vowels(T, RestCount), % Recursively count in the tail
+    Count is RestCount + 1. % Increment the count
+count_vowels([_ | T], Count) :- % If the head is not a vowel
+    count_vowels(T, Count). % Continue with the tail
+
+% Starting point
+start :-
+    write('Enter a list of characters (e.g., [a, b, c, o, u]): '),
+    read(InputList),
+    count_vowels(InputList, Count),
+    format('The number of vowels in the list is: ~w~n', [Count]).
+ **Output**:  
+   ```
+   Enter a list of characters (e.g., [a, b, c, o, u]): [a, b, c, o, u].
+   The number of vowels in the list is: 3
+Result:
+hence we written prolog for finding the number of vowels.

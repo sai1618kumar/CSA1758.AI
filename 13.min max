@@ -1,0 +1,53 @@
+Aim:
+The aim of this program is to implement the Minimax algorithm,
+which is commonly used in decision-making and game theory to determine the optimal move for a player assuming the opponent also plays optimally.
+This specific implementation is used to find the optimal value in a game tree.
+
+Algorithm:
+The Minimax algorithm is a recursive backtracking approach that explores all possible outcomes of a decision tree. Here is the step-by-step algorithm:
+1. Inputs:
+curDepth: Current depth in the tree.
+nodeIndex: Index of the current node in the scores array.
+maxTurn: Boolean indicating whether it's the maximizing player's turn (True) or the minimizing player's turn (False).
+scores: A list containing the leaf values of the decision tree.
+targetDepth: Depth of the decision tree, calculated as log2(len(scores)).
+2. Recursive Minimax Function:
+Base Case:
+If the current depth (curDepth) equals the target depth (targetDepth), return the score of the current node (scores[nodeIndex]).
+Recursive Case:
+If it is the maximizing player's turn (maxTurn == True):
+Return the maximum value between:
+The result of exploring the left child of the current node.
+The result of exploring the right child of the current node.
+Driver Code:
+Define the scores array, representing the leaf nodes of the game tree.
+Calculate the treeDepth as log2(len(scores))
+
+
+CODE:
+print("maha")
+import math
+def minimax (curDepth, nodeIndex,
+maxTurn, scores,
+targetDepth):
+  # base case : targetDepth reached
+  if (curDepth == targetDepth):
+      return scores[nodeIndex]
+  if (maxTurn):
+      return max(minimax(curDepth + 1, nodeIndex * 2,
+      False, scores, targetDepth),
+      minimax(curDepth + 1, nodeIndex * 2 + 1,
+      False, scores, targetDepth))
+  else:
+      return min(minimax(curDepth + 1, nodeIndex * 2,
+      True, scores, targetDepth),
+      minimax(curDepth + 1, nodeIndex * 2 + 1,
+      True, scores, targetDepth))
+  # Driver code
+scores = [3, 5, 2, 9, 12, 5, 23, 23]
+treeDepth = math.log(len(scores), 2)
+print("The optimal value is : ", end = "")
+print(minimax(0, 0, True, scores, treeDepth))
+Output:
+Enter the scores as space-separated integers: 3 5 6 9 1 2 0 -1
+The optimal value is: 5

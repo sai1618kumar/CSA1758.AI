@@ -1,0 +1,38 @@
+Aim:
+The aim of this Prolog program is to manage and query information about students and teachers. Specifically, it maps:
+->Subjects studied by students via subjects_studied_by_student/3.
+->Subjects taught by teachers via subjects_taught_by_teacher/3.
+
+Algorithm:
+Define the Knowledge Base:
+Use facts student_subject(Student, Subject, Code) to associate students with the subjects they study and the subject codes.
+Use facts teacher_subject(Teacher, Subject, Code) to associate teachers with the subjects they teach and the subject codes.
+Define Rules:
+Use the rule subjects_studied_by_student(Student, Subject, Code) to generalize student queries by directly linking to the student_subject/3 facts.
+Use the rule subjects_taught_by_teacher(Teacher, Subject, Code) to generalize teacher queries by directly linking to the teacher_subject/3 facts.
+Query the Knowledge Base:
+To find out which subjects a student studies, query using subjects_studied_by_student/3 with the student's name.
+To find out which subjects a teacher teaches, query using subjects_taught_by_teacher/3 with the teacher's name.
+
+
+CODE:
+student_subject(john, math, 101).
+student_subject(john, physics, 102).
+student_subject(alice, chemistry, 103).
+student_subject(alice, biology, 104).
+student_subject(michael, english, 105).
+student_subject(michael, history, 106).
+student_subject(susan, math, 101).
+student_subject(susan, biology, 104).
+student_subject(peter, physics, 102).
+student_subject(peter, chemistry, 103).
+teacher_subject(mr_smith, math, 101).
+teacher_subject(mr_jones, physics, 102).
+teacher_subject(mrs_brown, chemistry, 103).
+teacher_subject(mr_doe, biology, 104).
+teacher_subject(mrs_white, english, 105).
+teacher_subject(mr_black, history, 106).
+subjects_studied_by_student(Student, Subject, Code) :-
+    student_subject(Student, Subject, Code).
+subjects_taught_by_teacher(Teacher, Subject, Code) :-
+    teacher_subject(Teacher, Subject, Code).

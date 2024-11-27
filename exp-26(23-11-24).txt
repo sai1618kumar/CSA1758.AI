@@ -1,0 +1,37 @@
+Aim:To write the Prolog Program for implementing Monkey Banana Problem
+Algorithm:
+1.Define the initial state of the monkey, banana, and other relevant objects.
+2.Define the goal state where the monkey has the banana.
+3.Represent actions the monkey can take (e.g., walking, climbing, grabbing).
+4.Define rules to check the conditions for each action.
+5.Use logical inference to find a sequence of actions to reach the goal state.
+6.Output the sequence of actions leading to the goal state.
+Program:
+% Facts: State representation
+% state(MonkeyPosition, BoxPosition, MonkeyHasBanana)
+state(at_door, at_window, no).
+state(at_window, at_window, no).
+state(on_box, at_window, yes).
+
+% Actions
+action(go_to(Window), state(at_door, at_window, no), state(at_window, at_window, no)).
+action(push_box(Window), state(at_window, at_window, no), state(at_window, at_window, no)).
+action(climb_box, state(at_window, at_window, no), state(on_box, at_window, no)).
+action(grab_banana, state(on_box, at_window, no), state(on_box, at_window, yes)).
+
+% Rule to solve the problem
+solve(State, Goal, []) :- State = Goal.
+solve(State, Goal, [Action | Actions]) :-
+    action(Action, State, NextState),
+    solve(NextState, Goal, Actions).
+
+% Starting Point
+start :-
+    InitialState = state(at_door, at_window, no),
+    GoalState = state(on_box, at_window, yes),
+    solve(InitialState, GoalState, Actions),
+    write('Actions to get the banana: '), write(Actions), nl.
+Sample Output:
+Actions to get the banana: [go_to(Window), push_box(Window), climb_box, grab_banana]
+Result:
+thus we written a prolog program  for implementing Monkey Banana problem.

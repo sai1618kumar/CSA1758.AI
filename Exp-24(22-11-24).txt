@@ -1,0 +1,24 @@
+Aim:
+The aim of this Prolog program is to provide diet suggestions based on specific diseases.
+By defining facts about dietary recommendations for various diseases, the program enables querying for appropriate diets tailored to individual health conditions.
+
+
+Algorithm:
+Define Facts:
+Use diet_suggestion/2 to map each disease to a corresponding list of recommended foods.
+Disease: Name of the disease (e.g., diabetes, hypertension).
+Diet: List of recommended foods for managing the disease.
+Define Rule:
+Diet Suggestion Rule: suggest_diet(Disease, Diet) states that Diet is suggested for Disease if it matches a predefined diet_suggestion/2 fact.
+Query the Knowledge Base:
+Use suggest_diet/2 with a specific disease to retrieve the corresponding dietary recommendations.
+Execution:
+When queried with a disease, Prolog matches the input against the diet_suggestion/2 facts and returns the list of recommended foods.
+
+
+CODE:
+diet_suggestion(diabetes, ['High-fiber foods', 'Whole grains', 'Non-starchy vegetables', 'Lean protein', 'Healthy fats']).
+diet_suggestion(hypertension, ['Low-sodium foods', 'Fruits and vegetables', 'Whole grains', 'Lean protein', 'Healthy fats']).
+% Define predicate to suggest diet based on disease
+suggest_diet(Disease, Diet) :-
+    diet_suggestion(Disease, Diet).

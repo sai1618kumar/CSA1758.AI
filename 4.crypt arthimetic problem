@@ -1,0 +1,85 @@
+Aim:
+To solve cryptarithmetic puzzles where letters in a given equation are substituted by unique digits (0-9) such that the equation holds true mathematically. For example, solving puzzles like SEND + MORE = MONEY.
+
+Algorithm:
+Input the Puzzle:
+
+Read the cryptarithmetic equation in the format WORD1 + WORD2 = RESULT.
+Validate Input:
+
+Ensure the equation has exactly two words on the left-hand side and one on the right.
+Check that there are at most 10 unique characters (letters), as there are only 10 digits (0-9).
+Extract Unique Characters:
+
+Identify all unique letters in the equation, as these will be mapped to digits.
+Generate Permutations:
+
+Use all possible permutations of digits (0-9) for the unique characters.
+Check Constraints:
+
+Ensure that no word starts with a zero (e.g., SEND cannot start with 0).
+Map characters to digits and calculate the numeric values of WORD1, WORD2, and RESULT.
+Verify the Equation:
+
+Check if the numeric sum of WORD1 and WORD2 equals RESULT. If yes, print the solution.
+Output:
+
+If a solution is found, display the substituted equation. If no solution exists, indicate that.
+code:
+  import itertools
+
+def solve_cryptarithmetic():
+    # Get the cryptarithmetic equation from the user
+    equation = input("Enter the cryptarithmetic equation (e.g., SEND+MORE=MONEY): ").replace(" ", "")
+    parts = equation.split("=")
+    if len(parts) != 2 or "+" not in parts[0]:
+        print("Invalid equation format. Please use the format SEND+MORE=MONEY.")
+        return
+    
+    # Split the equation into parts
+    left_part, result = parts
+    words = left_part.split("+")
+    
+    if len(words) != 2:
+        print("Invalid equation format. Please use exactly two words on the left side.")
+        return
+    
+    # Extract unique characters
+    unique_chars = set("".join(words) + result)
+    if len(unique_chars) > 10:
+        print("Too many unique characters. A cryptarithmetic problem can only have up to 10 unique letters.")
+        return
+    
+    # Convert unique characters to a list for permutation
+    unique_chars = list(unique_chars)
+    
+    # Solve the equation by trying all permutations of digits
+    for perm in itertools.permutations(range(10), len(unique_chars)):
+        char_to_digit = dict(zip(unique_chars, perm))
+        
+        # Ensure no word starts with a zero
+        if any(char_to_digit[word[0]] == 0 for word in words + [result]):
+            continue
+        
+        # Convert words to numbers
+        left_num = sum(char_to_digit[char] * (10 ** i) for word in words for i, char in enumerate(reversed(word)))
+        result_num = sum(char_to_digit[char] * (10 ** i) for i, char in enumerate(reversed(result)))
+        
+        if left_num == result_num:
+            # Construct the solution as a string for display
+            solution = " + ".join("".join(str(char_to_digit[char]) for char in word) for word in words)
+            solution += f" = {''.join(str(char_to_digit[char]) for char in result)}"
+            print(f"Solution: {solution}")
+            return
+    
+    print("No solution found.")
+
+# Run the program
+solve_cryptarithmetic()
+
+Sample Output:
+Enter the cryptarithmetic equation (e.g., SEND+MORE=MONEY): two+two=four
+Solution: 734 + 734 = 1468
+
+
+  

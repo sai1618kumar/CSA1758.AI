@@ -1,0 +1,91 @@
+Aim:
+The aim of the program is to simulate a Vacuum Cleaner Agent that cleans a two-cell environment based on its current position and state. 
+The agent senses whether a cell is dirty and either cleans it or moves to the other cell, repeating this process for a specified number of steps.
+Algorithm:
+1. Initialization:
+Create a VacuumCleaner class to simulate the agent.
+Define attributes for the agent's current position (self.position) and the environment (self.environment), where each cell can be clean (0) or dirty (1).
+Initialize the environment with both cells as clean ([0, 0]).
+2. Sense the Environment:
+Use the sense() method to check whether the current cell is dirty or clean:
+0: The cell is clean.
+1: The cell is dirty.
+3. Clean the Cell:
+If the cell is dirty, use the clean() method to set the current cell to 0 (clean).
+4. Move to the Other Cell:
+Use the move() method to switch the agent's position:
+If the agent is at position 0 (left cell), move to position 1 (right cell).
+If the agent is at position 1 (right cell), move to position 0 (left cell).
+5. Run the Simulation:
+Use the run(steps) method to execute the cleaning process for a specified number of steps.
+In each step:
+Sense the state of the current cell.
+If dirty, clean it; otherwise, do nothing.
+Move to the other cell.
+Print the agent's action and the environment's state.
+print("yosha")
+class VacuumCleaner:
+    def __init__(self):
+        self.position = 0  # Position of the vacuum cleaner (0: Left, 1: Right)
+        self.environment = [0, 0]  # Environment with dirty cells (0: Clean, 1: Dirty)
+    def sense(self):
+        return self.environment[self.position]
+    def move(self):
+        if self.position == 0:
+            self.position = 1
+        else:
+            self.position = 0
+    def clean(self):
+        self.environment[self.position] = 0
+    def run(self, steps):
+        for _ in range(steps):
+            current_state = self.sense()
+            if current_state == 1:  # Dirty cell
+                self.clean()
+                print(f"Cleaned cell {self.position}")
+            else:
+                print(f"Cell {self.position} is already clean.")
+            self.move()
+if __name__ == "__main__":
+    vacuum_cleaner = VacuumCleaner()
+    steps = 5
+    print("Initial environment:", vacuum_cleaner.environment)
+    vacuum_cleaner.run(steps)
+    print("Final environment:", vacuum_cleaner.environment)
+  Output:
+  Enter the number of rows in the room: 3
+
+Enter the number of columns in the room: 2
+
+Enter the room state row by row (1 for Dirty, 0 for Clean):
+
+Row 1: 1 0 
+
+Row 2: 0 1
+
+Row 3: 1 1
+
+Initial Room State:
+
+D C
+
+C D
+
+D D
+
+
+
+Vacuum Cleaner Path:
+
+(0,0) -> (0,1) -> (1,0) -> (1,1) -> (2,0) -> (2,1)
+
+
+
+Final Room State (Cleaned):
+
+C C
+
+C C
+
+C C
+

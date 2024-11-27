@@ -1,0 +1,141 @@
+Aim:
+The aim of this program is to implement a Tic-Tac-Toe game for two players using Python. 
+The game allows players to alternately mark positions on a 3x3 board with either 'X' or 'O', and determines the winner or declares a draw when the game ends.
+
+Algorithm:
+The program follows these steps to execute the Tic-Tac-Toe game:
+
+1. Initialization:
+Create two arrays xState and zState, initialized with zeros, to represent the board state for player 'X' and player 'O' respectively.
+Define the win conditions in a list wins, which contains all possible winning combinations (rows, columns, diagonals).
+Set a turn variable to track which player is making a move (1 for 'X', 0 for 'O').
+2. Gameplay Loop:
+Display the Board:
+Use the printBoard function to show the current state of the board.
+Replace positions with 'X', 'O', or their corresponding indices if unoccupied.
+Player's Turn:
+Based on turn, allow the respective player to input a position (0-8) where they want to mark.
+Update the state array (xState or zState) based on the chosen position.
+Win or Draw Check:
+Use the checkWin function to evaluate if either player has won:
+Check all possible win conditions in wins to see if the sum of the player's marks in any condition equals 3.
+If a win is detected, announce the winner and terminate the game.
+If no player wins and the board is full (total_turns reaches 0), declare the game as a draw.
+Switch Turns:
+Alternate the turn variable between 1 and 0 to switch players.
+3. End the Game:
+Display the final state of the board and terminate the program.
+Execution Steps:
+Input:
+Players alternately enter numbers from 0 to 8 to mark positions on the board.
+Output:
+The program displays the board after each move, announces the winner if a player meets a win condition, or declares a draw if all positions are filled without a winner.
+print("maha")
+
+CODE:
+def sum(a,b,c):
+    return a+b+c
+def printBoard(xState , zState):
+    zero =  'X' if xState[0] else('@' if zState[0] else 0 )
+    one =  'X' if xState[1] else('@' if zState[1] else 1 )
+    two =  'X' if xState[2] else('@' if zState[2] else 2 )
+    three =  'X' if xState[3] else('@' if zState[3] else 3 )
+    four =  'X' if xState[4] else('@' if zState[4] else 4 )
+    five =  'X' if xState[5] else('@' if zState[5] else 5 )
+    six =  'X' if xState[6] else('@' if zState[6] else 6 )
+    seven =  'X' if xState[7] else('@' if zState[7] else 7 )
+    eight =  'X' if xState[8] else('@' if zState[8] else 8 )
+    print(f" {zero} | {one} | {two} ")
+    print(f"---|---|---")
+    print(f" {three} | {four} | {five} ")
+    print(f"---|---|---")
+    print(f" {six} | {seven} | {eight} ")
+def checkWin(xState,zState) : 
+    wins = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
+    for win in wins :
+        if(sum(xState[win[0]], xState[win[1]], xState[win[2]]) == 3) :
+            print("X won the game")
+            return 1
+        if(sum(zState[win[0]], zState[win[1]], zState[win[2]]) == 3) :
+            print("O won the game.")
+            return 0
+    return -1
+if __name__ == "__main__" : 
+    total_turns = 9
+    xState = [0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    zState = [0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+    turn = 1 # 1 for X and 0 for O
+    print("Welcome to TIC-TAC-TOE")
+    while(True) : 
+        printBoard(xState, zState)
+        if(turn == 1):
+            print("X's Chance")
+            value = int(input("Please enter a value : "))
+            xState[value] = 1
+        else :
+            print("O's Chance")
+            value = int(input("Please enter a value : "))
+            zState[value] = 1
+        total_turns = total_turns - 1
+        if(checkWin(xState, zState) != -1 or total_turns == 0 ):
+            print("GAME OVER")
+            printBoard(xState, zState)
+            break
+        turn = 1 -  turn
+        Output:
+         |   |  
+-----
+  |   |  
+-----
+  |   |  
+-----
+Player X's turn.
+Enter row and column (0, 1, 2) separated by space: 0 0 
+X |   |  
+-----
+  |   |  
+-----
+  |   |  
+-----
+Player O's turn.
+Enter row and column (0, 1, 2) separated by space: 1 0
+X |   |  
+-----
+O |   |  
+-----
+  |   |  
+-----
+Player X's turn.
+Enter row and column (0, 1, 2) separated by space: 2 0
+X |   |  
+-----
+O |   |  
+-----
+X |   |  
+-----
+Player O's turn.
+Enter row and column (0, 1, 2) separated by space: 1 1
+X |   |  
+-----
+O | O |  
+-----
+X |   |  
+-----
+Player X's turn.
+Enter row and column (0, 1, 2) separated by space: 0 1
+X | X |  
+-----
+O | O |  
+-----
+X |   |  
+-----
+Player O's turn.
+Enter row and column (0, 1, 2) separated by space: 1 2
+X | X |  
+-----
+O | O | O
+-----
+X |   |  
+-----
+Player O wins!
+
